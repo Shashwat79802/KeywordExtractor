@@ -13,5 +13,4 @@ COPY . /keyword_extractor/
 
 RUN mkdir -p /tmp/shm && mkdir /.local
 
-# ENTRYPOINT ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "gunicorn_conf.py", "app.main:app"]
-ENTRYPOINT ["uvicorn", "app.main:app"]
+ENTRYPOINT ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "gunicorn_conf.py", "app.main:app"]
