@@ -1,5 +1,3 @@
-import logging
-import logging.config
 import os
 import time
 from fastapi import FastAPI
@@ -8,9 +6,6 @@ from .models import Sentence
 from .keyword_extractor import keyword_extractor
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-
-logging.config.fileConfig(os.path.join(os.getcwd(), 'gunicorn/gunicorn_log_conf.ini'), disable_existing_loggers=False)
-logger = logging.getLogger(os.getenv('LOGGER_TO_USE'))
 
 app = FastAPI(
     title="Keyword Extractor API",
@@ -38,7 +33,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained("transformer3/H1-keywordextractor"
 def extract_keywords(sentence: Sentence):
     now = time.perf_counter()
     extracted_keywords =  keyword_extractor(sentence.text, tokenizer, model)
-    logger.info(f"Took {time.perf_counter() - now:.2f}s to extract keywords: {extracted_keywords}")
+    print(f"Took {time.perf_counter() - now:.2f}s to extract keywords: {extracted_keywords}")
     return [
         {
             "summary_text": extracted_keywords

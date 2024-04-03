@@ -1,7 +1,8 @@
 import json
 import multiprocessing
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -16,7 +17,6 @@ web_concurrency_str = os.getenv("WEB_CONCURRENCY", None)
 host = os.getenv("HOST", "0.0.0.0")
 port = os.getenv("PORT", "8000")
 bind_env = os.getenv("BIND", None)
-use_loglevel = os.getenv("LOG_LEVEL", "info")
 
 if bind_env:
     use_bind = bind_env
@@ -35,37 +35,24 @@ else:
     if use_max_workers:
         web_concurrency = min(web_concurrency, use_max_workers)
 
-accesslog_var = os.getenv("ACCESS_LOG", "-")
-use_accesslog = accesslog_var or None
-errorlog_var = os.getenv("ERROR_LOG", "-")
-use_errorlog = errorlog_var or None
 graceful_timeout_str = os.getenv("GRACEFUL_TIMEOUT", "60")
 timeout_str = os.getenv("TIMEOUT", "60")
 keepalive_str = os.getenv("KEEP_ALIVE", "5")
 
-# Gunicorn config variables
 worker_class = "app.workers.ConfigurableWorker"
-loglevel = use_loglevel
 workers = web_concurrency
 bind = use_bind
-errorlog = use_errorlog
-worker_tmp_dir = "/tmp/shm"
-accesslog = use_accesslog
 graceful_timeout = int(graceful_timeout_str)
 timeout = int(timeout_str)
 keepalive = int(keepalive_str)
+worker_tmp_dir = "/tmp/shm"
 
-# For debugging and testing
 log_data = {
-    "loglevel": loglevel,
     "workers": workers,
     "bind": bind,
     "graceful_timeout": graceful_timeout,
     "timeout": timeout,
     "keepalive": keepalive,
-    "errorlog": errorlog,
-    "accesslog": accesslog,
-    # Additional, non-gunicorn variables
     "workers_per_core": workers_per_core,
     "use_max_workers": use_max_workers,
     "host": host,
