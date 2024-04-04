@@ -9,6 +9,10 @@ COPY ./requirements.txt ./gunicorn_conf.py ./
 
 RUN python3 -m pip install -r ./requirements.txt
 
+COPY .env ./
+
+ENV ENV_FILE .env
+
 COPY . /keyword_extractor/
 
 RUN mkdir -p /tmp/shm && mkdir /.local
