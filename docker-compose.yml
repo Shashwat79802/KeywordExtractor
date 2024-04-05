@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  fastapi:
+    container_name: fastapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - SummarEase-Backend-Network
+    command: gunicorn -k uvicorn.workers.UvicornWorker -c gunicorn_conf.py app.main:app
+    expose:
+      - 6000
+    env_file:
+      - ./.env
+
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    networks:
+      - SummarEase-Backend-Network
+    ports:
+      - 1337:80
+    depends_on:
+      - fastapi
+
+
+networks:
+  SummarEase-Backend-Network:
+    driver: bridge
+    external: True
