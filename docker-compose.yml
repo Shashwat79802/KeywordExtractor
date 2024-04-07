@@ -4,8 +4,8 @@ services:
   fastapi:
     container_name: fastapi
     build: .
-    ports: 
-      - 8000:8000
+    expose:
+      - 6000
     networks:
       - SummarEase-Backend-Network
     env_file:
@@ -14,8 +14,8 @@ services:
   nginx:
     container_name: nginx
     build: ./nginx/
-    ports: 
-      - 1337:80
+    ports:
+      - 1338:80
     networks:
       - SummarEase-Backend-Network
     depends_on:
