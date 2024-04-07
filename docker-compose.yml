@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  fastapi:
+    container_name: fastapi
+    build: .
+    ports: 
+      - 8000:8000
+    networks:
+      - SummarEase-Backend-Network
+    env_file:
+      - ./.env
+
+  nginx:
+    container_name: nginx
+    build: ./nginx/
+    ports: 
+      - 1337:80
+    networks:
+      - SummarEase-Backend-Network
+    depends_on:
+      - fastapi
+
+
+networks:
+  SummarEase-Backend-Network:
+    driver: bridge
+    external: true
