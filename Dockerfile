@@ -1,20 +1,20 @@
-FROM python:3.12.2-slim-bookworm
+FROM python:3.10-bullseye
 
 WORKDIR /keyword_extractor
 
 ENV PYTHONUBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-COPY ./requirements.txt ./gunicorn_conf.py ./
+COPY ./requirements.txt /keyword_extractor/requirements.txt
 
-RUN python3 -m pip install -r ./requirements.txt
+COPY ./gunicorn_conf.py /keyword_extractor/gunicorn_conf.py
 
-COPY .env ./
+RUN pip install --no-cache-dir --upgrade -r /keyword_extractor/requirements.txt
 
-ENV ENV_FILE .env
+COPY ./app /keyword_extractor/app
 
-COPY . /keyword_extractor/
+RUN mkdir -p /tmp/shm
 
-RUN mkdir -p /tmp/shm && mkdir /.local
+COPY ./.env /keyword_extractor/.env
 
-ENTRYPOINT ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "gunicorn_conf.py", "app.main:app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-c", "gunicorn_conf.py", "app.main:app"]
