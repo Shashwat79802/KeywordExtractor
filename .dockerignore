@@ -7,3 +7,4 @@ app/__pycache__
 .gitignore
 .git
 git
+logs/*

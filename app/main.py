@@ -1,6 +1,8 @@
 import os
 import time
+import logging
 from fastapi import FastAPI
+from fastapi.logger import logger
 from fastapi.middleware.cors import CORSMiddleware
 from .models import Sentence
 from .keyword_extractor import keyword_extractor
@@ -13,6 +15,10 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/"
 )
+
+gunicornLogger = logging.getLogger('gunicorn.error')
+logger.handlers = gunicornLogger.handlers
+logger.setLevel(gunicornLogger.level)
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,7 +39,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained("transformer3/H1-keywordextractor"
 def extract_keywords(sentence: Sentence):
     now = time.perf_counter()
     extracted_keywords =  keyword_extractor(sentence.text, tokenizer, model)
-    print(f"Took {time.perf_counter() - now:.2f}s to extract keywords: {extracted_keywords}")
+    gunicornLogger.info(f"Took {time.perf_counter() - now:.2f}s to extract keywords: {extracted_keywords}")
     return [
         {
             "summary_text": extracted_keywords

@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   fastapi:
     container_name: fastapi
@@ -10,6 +8,9 @@ services:
       - SummarEase-Backend-Network
     env_file:
       - ./.env
+    volumes:
+      - ./gunicorn_conf.py:/keyword_extractor/gunicorn_conf.py:ro
+      - ./logs/fastapi/:/var/log/fastapi
 
   nginx:
     container_name: nginx
