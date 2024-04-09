@@ -1,4 +1,0 @@
-103.74.74.25 - - [09/Apr/2024:06:00:57 +0000] "POST /api/v1/extract-keywords HTTP/1.1" 200 73 "-" "PostmanRuntime/7.37.3"
-103.74.74.25 - - [09/Apr/2024:06:05:21 +0000] "POST /api/v1/extract-keywords HTTP/1.1" 200 73 "-" "PostmanRuntime/7.37.3"
-103.74.74.25 - - [09/Apr/2024:06:09:52 +0000] "POST /api/v1/extract-keywords HTTP/1.1" 200 73 "-" "PostmanRuntime/7.37.3"
-103.74.74.25 - - [09/Apr/2024:06:12:37 +0000] "POST /api/v1/extract-keywords HTTP/1.1" 200 73 "-" "PostmanRuntime/7.37.3"
