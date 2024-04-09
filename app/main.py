@@ -1,11 +1,10 @@
 import os
 import time
-import logging
 from fastapi import FastAPI
-from fastapi.logger import logger
 from fastapi.middleware.cors import CORSMiddleware
 from .models import Sentence
 from .keyword_extractor import keyword_extractor
+from .gunicorn_log import get_gunicorn_logger
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 
@@ -16,9 +15,7 @@ app = FastAPI(
     docs_url="/"
 )
 
-gunicornLogger = logging.getLogger('gunicorn.error')
-logger.handlers = gunicornLogger.handlers
-logger.setLevel(gunicornLogger.level)
+gunicornLogger = get_gunicorn_logger()
 
 app.add_middleware(
     CORSMiddleware,

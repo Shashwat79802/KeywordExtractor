@@ -1,7 +1,6 @@
 import json
 import multiprocessing
 import os
-from app.main import gunicornLogger
 
 
 workers_per_core_str = os.getenv("WORKERS_PER_CORE", "1")
@@ -66,4 +65,4 @@ log_data = {
     "host": host,
     "port": port,
 }
-gunicornLogger.info(json.dumps(log_data))
+print(json.dumps(log_data))

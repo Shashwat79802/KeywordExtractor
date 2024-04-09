@@ -3,5 +3,11 @@
 ./venv
 __pycache__
 */__pycache__/*
-./logs/nginx/*
-./logs/fastapi/*
+./logs/nginx/error.log
+!./logs/nginx/error.log
+./logs/nginx/access.log
+!./logs/nginx/access.log
+./logs/fastapi/error.log
+!.logs/fastapi/error.log
+./logs/fastapi/access.log
+!.logs/fastapi/access.log

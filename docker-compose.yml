@@ -9,7 +9,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./gunicorn_conf.py:/keyword_extractor/gunicorn_conf.py:ro
+      - ./app/gunicorn_conf.py:/keyword_extractor/app/gunicorn_conf.py:ro
       - ./logs/fastapi/:/var/log/fastapi
 
   nginx:
